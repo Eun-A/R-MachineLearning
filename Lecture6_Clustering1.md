@@ -130,39 +130,39 @@ k.means.fit
 k.means.fit.5
 ```
 
-    ## K-means clustering with 5 clusters of sizes 48, 31, 27, 56, 16
+    ## K-means clustering with 5 clusters of sizes 24, 49, 43, 20, 42
     ## 
     ## Cluster means:
-    ##          Type    Alcohol      Malic        Ash Alcalinity   Magnesium
-    ## 1  1.34311926  0.2024842  0.9416718  0.2625347  0.6066330 -0.03004191
-    ## 2  0.07973544 -0.9607629 -0.5950300 -1.0290850 -0.1443424 -0.46298256
-    ## 3  0.12752300 -0.8452219 -0.5275150 -0.3572097  0.1179630 -0.66909847
-    ## 4 -1.21052889  0.9609150 -0.3300103  0.2353052 -0.8080442  0.43068729
-    ## 5 -0.16218913 -0.6828651  0.3730727  0.9854713  1.0888566  0.60885258
-    ##      Phenols Flavanoids Nonflavanoids Proanthocyanins      Color
-    ## 1 -0.9964895 -1.2281714     0.6898521      -0.7506634  1.0027316
-    ## 2  0.2588226  0.2716856    -0.4892291       0.4538172 -0.8520031
-    ## 3 -0.6970085 -0.5150427     0.7320738      -0.7411997 -0.8294511
-    ## 4  0.8903222  0.9750575    -0.6117927       0.5381758  0.2350641
-    ## 5  0.5480739  0.6145567    -0.2157751       0.7398787 -0.7804645
-    ##          Hue   Dilution    Proline
-    ## 1 -1.1937885 -1.2925907 -0.3804607
-    ## 2  0.5502713  0.4914993 -0.8008180
-    ## 3  0.4285659 -0.2991958 -0.6705224
-    ## 4  0.4564709  0.7647391  1.2285909
-    ## 5  0.1943617  0.7537983 -0.4755945
+    ##          Type    Alcohol      Malic         Ash Alcalinity   Magnesium
+    ## 1  0.07973544 -0.9800345 -0.2339428 -0.61911389 -0.1793978  0.06185388
+    ## 2  1.34366784  0.1860184  0.9024258  0.24850925  0.5820616 -0.05049296
+    ## 3  0.07973544 -0.9056973 -0.4607458 -0.50185038  0.2724030 -0.68369264
+    ## 4 -1.01698924  0.5073523 -0.3789552  1.27935415  0.3338928  0.78826816
+    ## 5 -1.21052889  1.0286635 -0.2669777 -0.03156515 -1.0144442  0.34816863
+    ##      Phenols Flavanoids Nonflavanoids Proanthocyanins       Color
+    ## 1  0.5524014  0.4641768    -0.6945355       1.0052279 -0.78585644
+    ## 2 -0.9857762 -1.2327174     0.7148253      -0.7474990  0.98571769
+    ## 3 -0.4745104 -0.2740010     0.4018095      -0.4863046 -0.93842255
+    ## 4  0.7651783  0.8677207    -0.2519332       0.2176976 -0.07293746
+    ## 5  0.9558520  1.0402509    -0.7284936       0.6918839  0.29455492
+    ##          Hue    Dilution    Proline
+    ## 1  0.3538668  0.47181097 -0.6063207
+    ## 2 -1.1879477 -1.29787850 -0.3789756
+    ## 3  0.4543561  0.07787619 -0.8086104
+    ## 4  0.7811582  0.74411511  0.7846963
+    ## 5  0.3465752  0.81051440  1.2428052
     ## 
     ## Clustering vector:
-    ##   [1] 4 4 4 4 5 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 5 4 4 4 5 4 4 4 4 4 4 4 4 4
-    ##  [36] 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 3 3 3 3 2 3 2 2 2 3 2
-    ##  [71] 3 5 3 5 2 3 2 3 2 5 2 2 3 1 2 2 3 3 3 3 3 3 3 2 2 5 5 2 2 2 2 3 5 2 2
-    ## [106] 3 2 3 2 5 2 2 3 3 3 2 2 2 3 2 5 5 5 5 5 2 2 5 2 3 1 1 1 1 3 1 1 1 1 1
-    ## [141] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-    ## [176] 1 1 1
+    ##   [1] 5 5 5 5 4 5 5 4 5 5 5 5 5 5 5 4 4 4 5 5 5 4 5 4 4 4 5 5 4 5 4 5 5 4 4
+    ##  [36] 4 4 4 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 4 5 5 5 5 5 3 3 3 3 1 3 1 1 3 3 1
+    ##  [71] 3 4 3 4 1 3 3 3 1 1 3 1 3 2 1 3 3 3 3 3 3 3 3 1 1 1 1 1 1 1 1 3 3 3 3
+    ## [106] 3 3 3 1 1 1 3 3 3 3 3 3 3 3 3 1 4 3 1 1 3 1 3 3 3 2 2 2 2 2 2 2 2 2 2
+    ## [141] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+    ## [176] 2 2 2
     ## 
     ## Within cluster sum of squares by cluster:
-    ## [1] 294.8538 203.3838 179.9150 259.7093 175.3326
-    ##  (between_SS / total_SS =  55.1 %)
+    ## [1] 221.1025 304.6223 287.7534 122.5262 187.0239
+    ##  (between_SS / total_SS =  54.7 %)
     ## 
     ## Available components:
     ## 
@@ -174,32 +174,32 @@ k.means.fit.5
 k.means.fit.3.25
 ```
 
-    ## K-means clustering with 3 clusters of sizes 61, 49, 68
+    ## K-means clustering with 3 clusters of sizes 61, 68, 49
     ## 
     ## Cluster means:
     ##          Type    Alcohol      Malic        Ash Alcalinity   Magnesium
     ## 1 -1.16822514  0.8756272 -0.3037196  0.3180446 -0.6626544  0.56329925
-    ## 2  1.34366784  0.1860184  0.9024258  0.2485092  0.5820616 -0.05049296
-    ## 3  0.07973544 -0.9195318 -0.3778231 -0.4643776  0.1750133 -0.46892793
+    ## 2  0.07973544 -0.9195318 -0.3778231 -0.4643776  0.1750133 -0.46892793
+    ## 3  1.34366784  0.1860184  0.9024258  0.2485092  0.5820616 -0.05049296
     ##       Phenols  Flavanoids Nonflavanoids Proanthocyanins      Color
     ## 1  0.87403990  0.94098462  -0.583942581      0.58014642  0.1667181
-    ## 2 -0.98577624 -1.23271740   0.714825281     -0.74749896  0.9857177
-    ## 3 -0.07372644  0.04416309   0.008736157      0.01821349 -0.8598525
+    ## 2 -0.07372644  0.04416309   0.008736157      0.01821349 -0.8598525
+    ## 3 -0.98577624 -1.23271740   0.714825281     -0.74749896  0.9857177
     ##          Hue   Dilution    Proline
     ## 1  0.4823674  0.7648958  1.1550888
-    ## 2 -1.1879477 -1.2978785 -0.3789756
-    ## 3  0.4233092  0.2490794 -0.7630972
+    ## 2  0.4233092  0.2490794 -0.7630972
+    ## 3 -1.1879477 -1.2978785 -0.3789756
     ## 
     ## Clustering vector:
     ##   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-    ##  [36] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 3 3 3 3 3 3 3 3 3 3
-    ##  [71] 3 3 3 1 3 3 3 3 3 3 3 3 3 2 3 3 3 3 3 3 3 3 3 3 3 1 3 3 3 3 3 3 3 3 3
-    ## [106] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 2 2 2 2 2 2 2 2 2 2
-    ## [141] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
-    ## [176] 2 2 2
+    ##  [36] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2
+    ##  [71] 2 2 2 1 2 2 2 2 2 2 2 2 2 3 2 2 2 2 2 2 2 2 2 2 2 1 2 2 2 2 2 2 2 2 2
+    ## [106] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3
+    ## [141] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
+    ## [176] 3 3 3
     ## 
     ## Within cluster sum of squares by cluster:
-    ## [1] 350.5475 304.6223 623.1702
+    ## [1] 350.5475 623.1702 304.6223
     ##  (between_SS / total_SS =  48.4 %)
     ## 
     ## Available components:
@@ -230,9 +230,7 @@ wssplot(df)
 wssplot(df, nc = 6)
 ```
 
-![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-2.png) 
-
-결과 그래프에서 k=3이 적정하다고 나온다.
+![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-2.png) 결과 그래프에서 k=3이 적정하다고 나온다.
 
 <br>
 
@@ -252,9 +250,7 @@ clusplot(df, k.means.fit.5$cluster, main='2D representation of the Cluster solut
          labels=2, lines=0)
 ```
 
-![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-2.png) 
-
-k=3으로 설정했을 때보다 그래프에서 겹치는 부분이 많다.
+![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-2.png) k=3으로 설정했을 때보다 그래프에서 겹치는 부분이 많다.
 
 ``` r
 # confusion matrix
@@ -273,9 +269,9 @@ table(wine[,2],k.means.fit.5$cluster)
 
     ##    
     ##      1  2  3  4  5
-    ##   1  0  0  0 56  3
-    ##   2  1 31 26  0 13
-    ##   3 47  0  1  0  0
+    ##   1  0  0  0 17 42
+    ##   2 24  1 43  3  0
+    ##   3  0 48  0  0  0
 
 <br>
 
@@ -303,3 +299,268 @@ table(wine[,2],groups)
     ##   1 59  0  0
     ##   2  6 65  0
     ##   3  0  0 48
+
+<br>
+
+k-means 그룹간 거리 측정하기
+----------------------------
+
+``` r
+data(ruspini)
+
+rusp.norm <- scale(ruspini) # 항상 Feature scaling 해주고 데이터 작업
+rusp.norm.euclid <- dist(rusp.norm, method = "euclidean") 
+
+par(mfrow = c(2, 1))
+cl.sin <- hclust(rusp.norm.euclid, method = "single") #bottom up
+cl.ave <- hclust(rusp.norm.euclid, method = "average") # top down
+```
+
+``` r
+plot(cl.sin, hang = -1)
+```
+
+![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-12-1.png)
+
+``` r
+plot(cl.ave, hang = -1)
+```
+
+![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-13-1.png)
+
+``` r
+par(mfrow = c(1, 1))
+
+par(mar = c(5,4,1,1))
+mycluster = function(data, cluster, K, ...) {
+  col = cutree(cluster, k = K)
+  plot(data, col = col, pch = 19, ...)
+}
+mycluster(ruspini, cl.sin, K = 2)
+mycluster(ruspini, cl.ave, K = 2)
+```
+
+![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-14-1.png)
+
+``` r
+mycluster(ruspini, cl.sin, K = 3)
+```
+
+![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-14-2.png)
+
+``` r
+mycluster(ruspini, cl.ave, K = 3)
+```
+
+![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-14-3.png)
+
+``` r
+par(mfrow = c(1, 1))
+```
+
+``` r
+## 3. iris 데이터로 iteration 효과 확인
+library(ggplot2)
+ggplot(iris, aes(Petal.Length, Petal.Width, color = Species)) + geom_point()
+```
+
+![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-15-1.png)
+
+``` r
+km.5 <- kmeans(iris[,3:4], centers = 3, nstart = 10,
+                iter.max = 5, algorithm = "Lloyd")
+```
+
+    ## Warning: did not converge in 5 iterations
+
+    ## Warning: did not converge in 5 iterations
+
+    ## Warning: did not converge in 5 iterations
+
+    ## Warning: did not converge in 5 iterations
+
+    ## Warning: did not converge in 5 iterations
+
+    ## Warning: did not converge in 5 iterations
+
+    ## Warning: did not converge in 5 iterations
+
+    ## Warning: did not converge in 5 iterations
+
+    ## Warning: did not converge in 5 iterations
+
+``` r
+# 실행후 Warning messages : did not converge in 5 iterations 
+plot(iris[,3:4], pch = 19, col = km.5$cluster)
+```
+
+![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-15-2.png)
+
+``` r
+km.10 <- kmeans(iris[,3:4], centers = 3, nstart = 10,
+             iter.max = 10, algorithm = "Lloyd")
+# iter.max(반복횟수)값을 늘려주니 converge(수렴) 함
+plot(iris[,3:4], pch = 19, col = km.10$cluster)
+```
+
+![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-15-3.png)
+
+``` r
+km.20 <- kmeans(iris[,3:4], centers = 3, nstart = 10,
+             iter.max = 20, algorithm = "Lloyd")
+# 결과는 동일
+plot(iris[,3:4], pch = 19, col = km.20$cluster)
+```
+
+![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-15-4.png)
+
+``` r
+## 4. Visualization tool 활용
+## 4.1 k-medoids 의 효과 보기
+
+fviz_nbclust(df, kmeans, method = "gap_stat") # 적정 k 값 찾기
+```
+
+![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-15-5.png)
+
+``` r
+k.means.fit <- kmeans(df, 3, nstart = 25) # k-means
+fviz_cluster(k.means.fit, data = df, frame.type = "convex")+ theme_minimal()
+```
+
+    ## Warning: argument frame is deprecated; please use ellipse instead.
+
+    ## Warning: argument frame.type is deprecated; please use ellipse.type
+    ## instead.
+
+![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-15-6.png)
+
+``` r
+pam.res <- pam(df, 3) # k-medoids
+fviz_cluster(pam.res)  # 적용후 k-means 보다 덜 겹침
+```
+
+![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-15-7.png)
+
+``` r
+## 4.2 다른 데이터에 적용
+data("USArrests")
+my_data <- scale(USArrests)
+d <- dist(my_data, method = "euclidean")
+res.hc <- hclust(d, method = "ward.D2" ) #ward.D2s - bottom up
+grp <- cutree(res.hc, k = 4)
+plot(res.hc, cex = 0.6)
+rect.hclust(res.hc, k = 4, border = 2:5) # Cluster dendrogram 이 4개
+```
+
+![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-15-8.png)
+
+``` r
+# Dendrogram (hcut 함수 이용)
+res.hcut <- hcut(USArrests, k = 4, stand = TRUE)
+fviz_dend(res.hcut, rect = TRUE, cex = 0.5,
+          k_colors = c("#00AFBB","#2E9FDF", "#E7B800", "#FC4E07"))
+```
+
+![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-15-9.png)
+
+``` r
+# Optimal k 찾기
+fviz_nbclust(my_data, kmeans, method = "gap_stat")
+```
+
+![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-15-10.png)
+
+``` r
+res.nbclust <- NbClust(my_data, distance = "euclidean",
+                       min.nc = 2, max.nc = 10, 
+                       method = "complete", index ="all") 
+```
+
+![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-15-11.png)
+
+    ## *** : The Hubert index is a graphical method of determining the number of clusters.
+    ##                 In the plot of Hubert index, we seek a significant knee that corresponds to a 
+    ##                 significant increase of the value of the measure i.e the significant peak in Hubert
+    ##                 index second differences plot. 
+    ## 
+
+![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-15-12.png)
+
+    ## *** : The D index is a graphical method of determining the number of clusters. 
+    ##                 In the plot of D index, we seek a significant knee (the significant peak in Dindex
+    ##                 second differences plot) that corresponds to a significant increase of the value of
+    ##                 the measure. 
+    ##  
+    ## ******************************************************************* 
+    ## * Among all indices:                                                
+    ## * 9 proposed 2 as the best number of clusters 
+    ## * 4 proposed 3 as the best number of clusters 
+    ## * 6 proposed 4 as the best number of clusters 
+    ## * 2 proposed 5 as the best number of clusters 
+    ## * 1 proposed 8 as the best number of clusters 
+    ## * 1 proposed 10 as the best number of clusters 
+    ## 
+    ##                    ***** Conclusion *****                            
+    ##  
+    ## * According to the majority rule, the best number of clusters is  2 
+    ##  
+    ##  
+    ## *******************************************************************
+
+``` r
+factoextra::fviz_nbclust(res.nbclust) + theme_minimal()
+```
+
+    ## Among all indices: 
+    ## ===================
+    ## * 2 proposed  0 as the best number of clusters
+    ## * 1 proposed  1 as the best number of clusters
+    ## * 9 proposed  2 as the best number of clusters
+    ## * 4 proposed  3 as the best number of clusters
+    ## * 6 proposed  4 as the best number of clusters
+    ## * 2 proposed  5 as the best number of clusters
+    ## * 1 proposed  8 as the best number of clusters
+    ## * 1 proposed  10 as the best number of clusters
+    ## 
+    ## Conclusion
+    ## =========================
+    ## * According to the majority rule, the best number of clusters is  2 .
+
+![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-15-13.png)
+
+``` r
+## 5. 무슨 방법을 적용하는게 가장 좋은지 테스트
+
+test.result <- clValid(my_data, nClust = 2:6, 
+                  clMethods = c("hierarchical","kmeans","pam"),  # k-medoid~
+                  validation = "internal")
+summary(test.result)
+```
+
+    ## 
+    ## Clustering Methods:
+    ##  hierarchical kmeans pam 
+    ## 
+    ## Cluster sizes:
+    ##  2 3 4 5 6 
+    ## 
+    ## Validation Measures:
+    ##                                  2       3       4       5       6
+    ##                                                                   
+    ## hierarchical Connectivity   6.6437  9.5615 13.9563 22.5782 31.2873
+    ##              Dunn           0.2214  0.2214  0.2224  0.2046  0.2126
+    ##              Silhouette     0.4085  0.3486  0.3637  0.3213  0.2720
+    ## kmeans       Connectivity   6.6437 13.6484 16.2413 24.6639 33.7194
+    ##              Dunn           0.2214  0.2224  0.2224  0.1983  0.2231
+    ##              Silhouette     0.4085  0.3668  0.3573  0.3377  0.3079
+    ## pam          Connectivity   6.6437 13.8302 20.4421 29.5726 38.2643
+    ##              Dunn           0.2214  0.1376  0.1849  0.1849  0.2019
+    ##              Silhouette     0.4085  0.3144  0.3390  0.3105  0.2630
+    ## 
+    ## Optimal Scores:
+    ## 
+    ##              Score  Method       Clusters
+    ## Connectivity 6.6437 hierarchical 2       
+    ## Dunn         0.2231 kmeans       6       
+    ## Silhouette   0.4085 hierarchical 2
