@@ -231,6 +231,7 @@ wssplot(df, nc = 6)
 ```
 
 ![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-2.png) 
+
 결과 그래프에서 k=3이 적정하다고 나온다.
 
 <br>
