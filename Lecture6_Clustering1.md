@@ -252,6 +252,7 @@ clusplot(df, k.means.fit.5$cluster, main='2D representation of the Cluster solut
 ```
 
 ![](Lecture6_Clustering1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-2.png) 
+
 k=3으로 설정했을 때보다 그래프에서 겹치는 부분이 많다.
 
 ``` r
