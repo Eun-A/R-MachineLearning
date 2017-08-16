@@ -186,7 +186,9 @@ wine[c(4, 19),]
 biplot(wine_pca, xlabs = rep("", nrow(wine)))
 ```
 
-![](Lecture6_Clustering2_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-11-1.png) \#\#\#\# 3. USArret 데이터에 활용
+![](Lecture6_Clustering2_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-11-1.png) 
+
+#### 3. USArret 데이터에 활용
 
 ``` r
 # 3.1 princomp 명령어
@@ -277,7 +279,9 @@ ggplot(data = scores, aes(x = PC1, y = PC2, label = rownames(scores))) +
   ggtitle("미국 범죄율 PCA plot")
 ```
 
-![](Lecture6_Clustering2_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-15-1.png) \#\#\#\# 5. 몇 개의 변수만을 골라서 작업하기
+![](Lecture6_Clustering2_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-15-1.png) 
+
+#### 5. 몇 개의 변수만을 골라서 작업하기
 
 ``` r
 pc.use <- 7 # 90%의 covariance를 설명한다
