@@ -1,4 +1,4 @@
-Lecture6\_Clustering.r
+Lecture6\_Clustering
 ================
 
 ``` r
