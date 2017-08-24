@@ -1,0 +1,386 @@
+---
+title: "Recommendation system: 추천 알고리즘"
+output: rmarkdown::github_document
+---
+
+
+```{r}
+# install.packages("recommenderlab")
+# install.packages("ggplot2")
+# install.packages("data.table")
+
+suppressMessages({
+library(recommenderlab)
+library(ggplot2)
+library(data.table)
+})
+```
+
+```{r}
+# 데이터 불러오기 - 영화 평점 정
+movies <- read.csv("movies.csv",stringsAsFactors=FALSE)
+ratings <- read.csv("ratings.csv")
+
+# 영화 중 장르 부분만 데이터 프레임화
+genres <- as.data.frame(movies$genres, stringsAsFactors=FALSE)
+
+# 한 영화당 여러개의 장르가 들어있으니 분리
+# strsplit은 문자를 나누는 명령어, tstrsplit은 일종의 transpose (전치 행렬)
+# 왜 전치행렬을 써야할까? 
+genres2 <- as.data.frame(tstrsplit(genres[,1], '[|]', 
+                                   type.convert=TRUE), 
+                         stringsAsFactors=FALSE)
+colnames(genres2) <- c(1:length(genres2))
+
+# 목록에 있는 전체 장르 숫자 확인
+unique(genres2[!is.na(genres2)])
+```
+
+```{r}
+# 총 20개 장르 지정
+genre_list <- c("Action", "Adventure", "Animation", "Children", 
+                "Comedy", "Crime","Documentary", "Drama", "Fantasy",
+                "Film-Noir", "Horror", "Musical", "Mystery","Romance",
+                "Sci-Fi", "Thriller", "War", "Western", "(no genres listed)", "IMAX")
+
+# 더 간단한 버젼 - 사용시 유의사항? 문자열의 오류가있으면 ..
+genre_list2 <- unique(genres2[!is.na(genres2)])
+
+# 빈 행렬 - 각 영화별로 해당되는 장르들을 행렬로 만든다
+genre_matrix <- matrix(0,length(genres$movies)+1,length(genre_list))
+
+# 행렬의 첫번째 행을 영화 장르로
+genre_matrix[1,] <- genre_list
+
+# 영화 장르 이름을 column name으로 지정
+colnames(genre_matrix) <- genre_list
+
+# 영화별로 장르들을 행렬에 삽입 - 문자대신 숫자 1 or 0으로
+for (i in 1:nrow(genres2)) {
+  for (c in 1:ncol(genres2)) {
+    genmat_col <- which(genre_matrix[1,] == genres2[i,c])
+    genre_matrix[i+1,genmat_col] <- 1
+  }
+}
+```
+
+#### 행렬로 만든 데이터를 데이터 프레임으로 전환 - 패턴 찾기 용도에 맞게 데이터 전환
+```{r}
+# 첫번째 행은 장르 이름이니까 제거하고 시작한다
+genre_matrix2 <- as.data.frame(genre_matrix[-1,], stringsAsFactors=FALSE)
+
+# # 장르에 해당하는 값을 Integer로 지정 - list object들은 integer로 지정이 안 된다
+# genre_matrix2 <- as.integer(genre_matrix2)
+
+# 귀찮지만 for loop을 이용해서 각 열마다 따로 전환
+for (c in 1:ncol(genre_matrix2)) {
+  genre_matrix2[,c] <- as.integer(genre_matrix2[,c])
+}
+
+# View(genre_matrix2)
+```
+
+```{r}
+# 문자열의 우측값 n개를 잡아내는 함수
+# movies$title 확인해보면 출시연도가 들어가 있음
+# 출시연도를 분리해내고 싶음
+substrRight <- function(x, n){
+  substr(x, nchar(x)-n+1, nchar(x))
+}
+
+# 위의 함수를 이용해 출시 연도를 분리
+years <- as.data.frame(movies$title, stringsAsFactors=FALSE)
+
+### 아래부분 맥에서는 에러남.. 왜일까
+# years <- as.data.frame(substr(substrRight(substrRight(years$`movies$title`,6),5),1,4))
+# 
+# # 출시 연도를 다시 행렬에 독립열로 삽입
+# search_matrix <- cbind(movies[,1], substr(movies[,2],1,nchar(movies[,2])-6), years, genre_matrix2)
+# colnames(search_matrix) <- c("movieId", "title", "year", genre_list)
+# 
+# # 파일 저장하기 - 만약에 아래의 형태로 처음부터 데이터 추출이 가능했다면 얼마나 좋았을까?
+# write.csv(search_matrix, "search.csv")
+
+search_matrix <- read.csv("search.csv", stringsAsFactors=FALSE)
+
+```
+
+```{r}
+# 데이터 확인: 1995년에 나온 Action 영화 목록
+subset(search_matrix, Action == 1 & year == 1995)$title
+```
+
+### 영화 평점 파일에 데이터 작업
+```{r}
+# 5 단계 영화 평점 파일이 너무 복잡하니 2단계로 먼저 시도
+# 별점 4,5는 1 (like), 별점 3 미만은 -1 (dislike)
+binaryratings <- ratings
+for (i in 1:nrow(binaryratings)){
+  if (binaryratings[i,3] > 3){
+    binaryratings[i,3] <- 1
+  }
+  else{
+    binaryratings[i,3] <- -1
+  }
+}
+
+# 데이터 포맷 변경
+binaryratings2 <- dcast(binaryratings, movieId~userId, value.var = "rating", na.rm=FALSE)
+
+# 데이터 확인 - 가로축은 movieId, 세로축은 userId
+# View(binaryratings2) # 영화는 총 9125개 있는데, 별점은 총 9066개 밖에 없다 - 별점없는 영화 지못미....
+```
+
+```{r}
+# NA 값들은 0으로 만들자
+for (i in 1:ncol(binaryratings2)){
+  binaryratings2[which(is.na(binaryratings2[,i]) == TRUE),i] <- 0
+}
+
+#remove movieIds col. Rows are movieIds, cols are userIds
+binaryratings2 <- binaryratings2[,-1]
+
+# 9125 <> 9066 이니까 "지못미" 영화들 정리
+movieIds <- length(unique(movies$movieId)) #9125
+ratingmovieIds <- length(unique(ratings$movieId)) #9066
+
+# 두 리스트에 모두 존재하는 영화면 TRUE, 아니면 FALSE
+movies$movieId %in% ratings$movieId
+
+# FALSE로 나온 행을 모두 제거 - which는 그런 행을 찾고, 앞의 -는 그런 행을 뺀 값을 구해줌
+movies2 <- movies[-which((movies$movieId %in% ratings$movieId) == FALSE),]
+rownames(movies2) <- NULL
+
+# 같은 작업을 genre_matrix2에서도 - movie에서 genre 뽑았었으니까
+genre_matrix3 <- genre_matrix2[-which((movies$movieId %in% ratings$movieId) == FALSE),]
+rownames(genre_matrix3) <- NULL
+
+# 각 유저별로 장르에 평점 준 정보 정리
+
+# 위에서 했던 것처럼, 빈 행렬 (장르숫자 x 유저 숫자) 하나 만들고 값 입력
+result <- matrix(0, ncol(genre_matrix3), ncol(binaryratings2))
+for (c in 1:ncol(binaryratings2)){
+  for (i in 1:ncol(genre_matrix3)){
+    result[i,c] <- sum((genre_matrix3[,i]) * (binaryratings2[,c])) # 장르별 평점 합계
+  }
+}
+
+# 음수 값이면 0, 양수면 1로 지정
+for (c in 1:ncol(result)){
+  for (i in 1:nrow(result)){
+    if (result[i,c] < 0){
+      result[i,c] <- 0
+    }
+    else {
+      result[i,c] <- 1
+    }
+  }
+}
+
+## 드디어 데이터 클리닝 완료
+## 0/1 구분만 제외하고 처음부터 이렇게 데이터를 뽑을 수 있다면 얼마나 좋을까?
+
+```
+
+### User-Based Collaborative Filtering (UBCF) 알고리즘
+```{r}
+# 유저간 유사도는 Cosine similarity로 계산
+# Nearest Neighbors: 30명
+
+# install.packages("reshape2")
+# install.packages("recommenderlab")
+
+library(reshape2)
+library(recommenderlab)
+```
+
+```{r}
+# 위와 같은 방식으로 평점 행렬 만들기 (userId, movieId)
+ratingmat <- dcast(ratings, userId~movieId, value.var = "rating", na.rm=FALSE)
+ratingmat <- as.matrix(ratingmat[,-1]) #remove userIds
+View(ratingmat)
+
+# recommenderlab 에서 활용할 수 있도록 데이터 포맷 변경
+# sparse matrix 
+ratingmat <- as(ratingmat, "realRatingMatrix")
+
+# 도대체 realRatingMatrix 가 뭐지? 
+?realRatingMatrix 
+
+# 시험삼아 처음 4명의 유저간 유사도를 계산
+similarity_users <- similarity(ratingmat[1:4, ], 
+                               method = "cosine", # 유사도 지정, cosine이외에 jaccard 도 많이 활용
+                               which = "users") # 유저대신 item으로 지정하면 Item-Based Collaborative Filtering 알고리즘
+as.matrix(similarity_users)
+image(as.matrix(similarity_users), main = "유저간 유사성")
+```
+
+```{r}
+# 이번엔 처음 4개 영화에 대해서 유사성 지정
+similarity_items <- similarity(ratingmat[, 1:4], 
+                               method = "cosine",
+                               which = "items")
+as.matrix(similarity_items)
+image(as.matrix(similarity_items), main = "아이템간 유사성")
+```
+
+```{r}
+# 평점을 테이블로 정리
+vector_ratings <- as.vector(ratingmat@data)
+(table_ratings <- table(vector_ratings))
+# unique(vector_ratings)
+
+# 평점 분포를 그래프로
+vector_ratings <- vector_ratings[vector_ratings != 0] # rating 이 0이면 NA이므로 제거
+vector_ratings <- factor(vector_ratings) # Factor로 지정해야 각 평점별로 몇 개나 나오는지 넣어서 그래프 그릴 수 있음
+
+qplot(vector_ratings) + 
+  ggtitle("평점 분포")
+```
+
+```{r}
+# 평점 평균 은근히 높다 - Upward-biase가 있는건 아닐까? 평점 안 준 사람들은 사실 0인거 아닐까? 0.5 점수는 비중은 낮네?
+mean(ratingmat@data[ratingmat@data != 0]); var(ratingmat@data[ratingmat@data != 0]) # 평균, 분산
+
+## 관객수 (정확하게는 별점수) 별로 영화들 재정리
+# 별점수 (관객수를 추정할 수 있는 데이터라서 - 정비례하는 것은 아님, PCA에서 Vector 아이디어 상기)
+views_per_movie <- colCounts(ratingmat) 
+
+# 데이터 프레임으로 변경 + 내림차순으로 sorting (order 함수 이용)
+table_views <- data.frame(movie = names(views_per_movie),
+                          views = views_per_movie)
+table_views <- table_views[order(table_views$views, 
+                                 decreasing = TRUE), ]
+
+# 상위 10개 영화로 그래프
+ggplot(table_views[1:10, ], aes(x = movie, y = views)) +
+  geom_bar(stat="identity") + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
+  scale_x_discrete(labels=subset(movies2, movies2$movieId == table_views$movie)$title) +
+  ggtitle("상위 10개 영화 별점수")
+```
+
+```{r}
+# Heatmap으로 나타내기 1 - 원래 데이터
+image(ratingmat, main = "별점 Heatmap")
+image(ratingmat[rowCounts(ratingmat) > quantile(rowCounts(ratingmat), 0.90),
+                colCounts(ratingmat) > quantile(colCounts(ratingmat), 0.99)], 
+      main = "상위 10% 유저와 상위 1% 영화의 Heatmap")
+```
+
+```{r}
+# Heatmap으로 나타내기 2 - Scaling한 데이터
+ratingmat_norm <- normalize(ratingmat)
+image(ratingmat_norm[rowCounts(ratingmat_norm) > quantile(rowCounts(ratingmat_norm), 0.90),
+                     colCounts(ratingmat_norm) > quantile(colCounts(ratingmat_norm), 0.99)], 
+      main = "상위 10% 유저와 상위 1% 영화의 Heatmap - Scaling 한 데이터")
+```
+
+#### 알고리즘 만들기
+```{r}
+# UBCF 알고리즘
+recommender_model <- Recommender(ratingmat_norm, # Scaling 한 데이터 사용
+                                 method = "UBCF", # User-based - Item-based로 하고 싶으면 IBCF로 설정
+                                 param=list(method="Cosine", # 유저간 유사도는 Cosine similarity로
+                                            nn=30)) # kNN에서 k 값을 30으로 지정
+
+# 함수에서 모델 뽑아내기
+model_details <- getModel(recommender_model)
+model_details$data
+```
+
+```{r}
+# 데이터 확인 작업
+recom <- predict(recommender_model, # 위에서 구한 모델에
+                 ratingmat[1], # 첫번째 유저의
+                 n=10) # 상위 10개 추천 목록
+
+recom
+```
+
+```{r}
+# recommenderlab 용으로 바꾼 데이터를 "List" 형태로 전환 - 읽을 수 있도록
+recom_list <- as(recom, "list") 
+```
+
+```{r}
+# 영화 목록 추출
+recom_result <- matrix(0,10)
+for (i in 1:10){
+  recom_result[i] <- as.character(subset(movies, 
+                                         movies$movieId == as.integer(recom_list[[1]][i]))$title)
+}
+```
+
+```{r}
+
+# 모델 평가
+evaluation_scheme <- evaluationScheme(ratingmat, 
+                                      method="cross-validation", # Bootstrap (랜덤하게 데이터를 N회 쪼갬), split 등의 옵션을 고를 수 있음
+                                      k=5, # k=5 는 cross validation 할 때 데이터 셋을 5개로 나눠서 해라는 뜻
+                                      given=3, # 3 개 아이템을 기준으로 평가
+                                      goodRating=5) # 제일 좋은 점수의 기준값
+evaluation_results <- evaluate(evaluation_scheme, 
+                               method="UBCF", 
+                               n=c(1,3,5,10,15,20)) # 몇 개 항목을 추천할건지, 1개에서 최대 20개까지
+avg(evaluation_results)
+(eval_results <- getConfusionMatrix(evaluation_results)[[1]])
+
+# TP: True Positive, FP: False Positive
+# FN: False Negative, TN: True Negative
+
+# 그래프로 그리기
+plot(evaluation_results, annotate = TRUE, main = "ROC Curve")
+plot(evaluation_results, "prec/rec", annotate = TRUE, main = "Precision-recall")
+```
+
+### 위의 데이터로 간단한 D3 그래프 그려보기 작업
+```{r}
+
+# install.packages("networkD3")
+library(networkD3)
+new.matrix <- search_matrix[,-(1:4)]
+hc <- hclust(dist(new.matrix))
+cluster.index <- cutree(hc, k= 3)
+head(cluster.index)
+```
+
+```{r}
+Nodes <- data.frame(cbind(search_matrix[1:20,3], cluster.index[1:20], abs(round(100*rnorm(20,0,1),0))))
+colnames(Nodes) <- c('Movie', 'Group','Size')
+# View(Nodes)
+```
+
+```{r}
+Links <- data.frame(cbind(search_matrix[1:20,2]-1, sample(search_matrix[1:20,2])-1, abs(round(20*rnorm(20,0,1),0))))
+colnames(Links) <- c('source', 'target','value')
+# View(Links)
+```
+
+```{r}
+comp.network <- forceNetwork(Links = Links, Nodes = Nodes,
+                             Source = "source", Target = "target",
+                             Value = "value", NodeID = "Movie",
+                             Group = "Group", opacity = 0.8,
+                             zoom = FALSE, legend = TRUE,
+                             fontSize = 15, fontFamily = "serif",
+                             Nodesize = "Size",
+                             radiusCalculation = "Math.sqrt(d.nodesize)+6",
+                             arrows = TRUE)
+comp.network
+```
+
+### Appendix
+```{r}
+# library(networkD3)
+data(MisLinks); data(MisNodes)
+# View(MisLinks); View(MisNodes)
+
+comp.network <- forceNetwork(Links = MisLinks, Nodes = MisNodes,
+                             Source = "source", Target = "target",
+                             Value = "value", NodeID = "name",
+                             Group = "group", opacity = 0.8)
+comp.network
+
+```
+
